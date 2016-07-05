@@ -7,6 +7,7 @@ $config = parse_ini_file( 'config.ini' );
 $servername = $config['servername'];
 $username = $config['username'];
 $password = $config['password'];
+
 $dbname = 'commtv_refresh';
 $today = date("Y-m-d H:i:s");
 

@@ -81,14 +81,22 @@ function retrieveSearchHash( $dbname ){
 	}
 	
 	mysqli_close($serverConnection);
+	
+	if( $result->num_rows > 1 ){
+		$hash = [];
+		while( $row = mysqli_fetch_assoc($result) ){
+			array_push( $hash, $row['value'] );
+		}
+	}
+	else{
+		$row = $result->fetch_assoc();
 
-	$row = $result->fetch_assoc();
-	$hash = $row['value'];
-	$updated_at = $row['updated_at'];
+		$hash = $row['value'];
+		$updated_at = $row['updated_at'];
 
-	$updated_pos = strpos( $hash, '[updated_at]=' );
-	//$hash = substr_replace( $hash, $updated_at, $updated_pos+13, 0 );
-
+		$updated_pos = strpos( $hash, '[updated_at]=' );
+		//$hash = substr_replace( $hash, $updated_at, $updated_pos+13, 0 );
+	}
 	return $hash;
 }
 

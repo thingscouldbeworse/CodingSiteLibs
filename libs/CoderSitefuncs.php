@@ -312,20 +312,39 @@ function retrieveTranscriptIDList( $dbname ){
 
 	$transcript_ids = [];
 
-	$searchHash = retrieveSearchHash( $dbname );
-	$search_results_json = runCurlSearch( $searchHash, $limit, $offset);
-	$search_array = (array)$search_results_json->results->hits;
+	$search_hash = retrieveSearchHash( $dbname );
 
-	while( sizeof($search_array['hits']) < $search_array['total'] ){
-		$offset = $offset + 50;
+	$upper_limit = sizeof( $search_hash );
+	$index = 0;
+	while( $index < $upper_limit ){
+		print( "index: " . $index . "\n" );
+		if( isset($search_hash[0]) ){
+			$searchHash = $search_hash[$index];
+		}
+		else{
+			$searchHash = $search_hash;
+		}
+
 		$search_results_json = runCurlSearch( $searchHash, $limit, $offset);
-		$array2 = (array)$search_results_json->results->hits;
+		$search_array = (array)$search_results_json->results->hits;
 
-		$search_array =  addSearchArray( $search_array, $array2 );
-	}
+		print_r( sizeof($search_array['hits']) . "\n");
 
-	foreach( $search_array['hits'] as $hit ){
-		array_push( $transcript_ids, $hit->_id );
+		$offset = 0;
+		while( sizeof($search_array['hits']) < $search_array['total'] ){
+			print( "offest: " . $offset . PHP_EOL );
+			$offset = $offset + 50;
+			$search_results_json = runCurlSearch( $searchHash, $limit, $offset);
+			$array2 = (array)$search_results_json->results->hits;
+
+			$search_array =  addSearchArray( $search_array, $array2 );
+		}
+
+		foreach( $search_array['hits'] as $hit ){
+			array_push( $transcript_ids, $hit->_id );
+		}
+
+		$index = $index + 1;
 	}
 
 	return $transcript_ids;
