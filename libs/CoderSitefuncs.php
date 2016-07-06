@@ -449,7 +449,7 @@ function refreshCodingSite( $dbname ){
 	while( $index < $upper_limit ){
 
 		print( "RefreshCodingSite index: " . $index . "\n" );
-		if( isset($search_hash[0]) ){
+		if( $upper_limit > 1 ){
 			$searchHash = $search_hash[$index];
 		}
 		else{
@@ -598,7 +598,7 @@ function refreshNew( $dbname ){
 	while( $index < $upper_limit ){
 
 		print( "index: " . $index . "\n" );
-		if( isset($search_hash[0]) ){
+		if( $upper_limit > 1 ){
 			$searchHash = $search_hash[$index];
 		}
 		else{
