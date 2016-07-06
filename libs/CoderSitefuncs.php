@@ -353,24 +353,39 @@ function retrieveTranscriptIDList( $dbname ){
 // retrieve the list of transcript ID's but with a given search hash instead of retrieving a new one
 function retrieveIDs_from_hash( $search_hash ){
 
-	$limit = 50;
-	$offset = 0;
+	$upper_limit = sizeof( $search_hash );
+	$index = 0;
 
-	$transcript_ids = [];
+	while( $index < $upper_limit ){
 
-	$search_results_json = runCurlSearch( $search_hash, $limit, $offset);
-	$search_array = (array)$search_results_json->results->hits;
+		print( "index: " . $index . "\n" );
+		if( isset($search_hash[0]) ){
+			$searchHash = $search_hash[$index];
+		}
+		else{
+			$searchHash = $search_hash;
+		}
 
-	while( sizeof($search_array['hits']) < $search_array['total'] ){
-		$offset = $offset + 50;
+		$limit = 50;
+		$offset = 0;
+
+		$transcript_ids = [];
+
 		$search_results_json = runCurlSearch( $searchHash, $limit, $offset);
-		$array2 = (array)$search_results_json->results->hits;
+		$search_array = (array)$search_results_json->results->hits;
 
-		$search_array =  addSearchArray( $search_array, $array2 );
-	}
+		while( sizeof($search_array['hits']) < $search_array['total'] ){
+			$offset = $offset + 50;
+			$search_results_json = runCurlSearch( $searchHash, $limit, $offset);
+			$array2 = (array)$search_results_json->results->hits;
 
-	foreach( $search_array['hits'] as $hit ){
-		array_push( $transcript_ids, $hit->_id );
+			$search_array =  addSearchArray( $search_array, $array2 );
+		}
+
+		foreach( $search_array['hits'] as $hit ){
+			array_push( $transcript_ids, $hit->_id );
+		}
+		$index = $index + 1;
 	}
 
 	return $transcript_ids;
@@ -428,15 +443,31 @@ function refreshCodingSite( $dbname ){
 
 	$search_hash = retrieveSearchHash( $dbname ); // get the search associated with the site
 
-	$search_array = hashToArray( $search_hash ); // convert stored hash to workable array
+	$upper_limit = sizeof( $search_hash );
+	$index = 0;
+
+	while( $index < $upper_limit ){
+
+		print( "index: " . $index . "\n" );
+		if( isset($search_hash[0]) ){
+			$searchHash = $search_hash[$index];
+		}
+		else{
+			$searchHash = $search_hash;
+		}
+
+		$search_array = hashToArray( $searchHash ); // convert stored hash to workable array
 	
-	$search_array = updateSearch( $search_array ); // update date_to to today's date
+		$search_array = updateSearch( $search_array ); // update date_to to today's date
 
-	$search_hash = arrayToHash( $search_array ); // convert date-changed array back into a hash
+		$searchHash = arrayToHash( $search_array ); // convert date-changed array back into a hash
 
-	addRawSearchHash( $dbname, $search_hash );	// place that search back in the DB
+		addRawSearchHash( $dbname, $searchHash );	// place that search back in the DB
 
-	$num_before = numTranscripts( $dbname ); // find out how many transcripts were in place prior to refresh
+		$num_before = numTranscripts( $dbname ); // find out how many transcripts were in place prior to refresh
+
+		$index = $index + 1;
+	}
 	
 	// grab all id's returned by the search used to generate this coding site
 	// (and so stored as a hash in the mySQL DB)
@@ -556,16 +587,35 @@ function refreshNew( $dbname ){
 
 	$search_hash = retrieveSearchHash( $dbname ); // get the search associated with the site
 
-	$search_array = hashToArray( $search_hash ); // convert stored hash to workable array
+	$upper_limit = sizeof( $search_hash );
+	$index = 0;
+
+	$search_hash_changed = [];
+
+	while( $index < $upper_limit ){
+
+		print( "index: " . $index . "\n" );
+		if( isset($search_hash[0]) ){
+			$searchHash = $search_hash[$index];
+		}
+		else{
+			$searchHash = $search_hash;
+		}
+
+		$search_array = hashToArray( $searchHash ); // convert stored hash to workable array
 	
-	$search_array = updateSearch( $search_array ); // update date_to to today's date
-	$search_array = backUpdateSearch( $search_array ); 
+		$search_array = updateSearch( $search_array ); // update date_to to today's date
+		$search_array = backUpdateSearch( $search_array ); 
 
-	$search_hash = arrayToHash( $search_array ); // convert date-changed array back into a hash
+		$searchHash = arrayToHash( $search_array ); // convert date-changed array back into a hash
 
-	$num_before = numTranscripts( $dbname ); // find out how many transcripts were in place prior to refresh
+		$num_before = numTranscripts( $dbname ); // find out how many transcripts were in place prior to refresh
 
-	$transcript_list = retrieveIDs_from_hash( $search_hash );
+		$index = $index + 1;
+		array_push( $search_hash_changed, $searchHash );
+	}
+
+	$transcript_list = retrieveIDs_from_hash( $search_hash_changed );
 
 	$index = 1;
 	$transcripts = [];
