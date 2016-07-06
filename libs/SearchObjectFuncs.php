@@ -28,7 +28,7 @@ function recodeHash( $search_hash ){
 
 // adds a string (formatted search hash) to the DB table for this coding site
 // allows for future retrieval to run searches again and append new results
-function addRawSearchHash( $dbname, $search_hash ){
+function addRawSearchHash( $dbname, $search_hash, $id ){
 	
 	$config = parse_ini_file( 'config.ini' );
 	$servername = $config['servername'];
@@ -46,7 +46,7 @@ function addRawSearchHash( $dbname, $search_hash ){
 	$updated_at = $today;
 
 	$sql = "INSERT INTO `settings`(`id`, `name`, `value`, `created_at`) 
-	VALUES ('4','search hash', '$search_hash', '$today')
+	VALUES ('$id','search hash', '$search_hash', '$today')
 	ON DUPLICATE KEY UPDATE
 	value='$search_hash', updated_at='$updated_at'";
 

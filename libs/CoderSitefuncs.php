@@ -317,7 +317,7 @@ function retrieveTranscriptIDList( $dbname ){
 	$upper_limit = sizeof( $search_hash );
 	$index = 0;
 	while( $index < $upper_limit ){
-		print( "index: " . $index . "\n" );
+		print( "Retrieve Transcript ID List index: " . $index . "\n" );
 		if( isset($search_hash[0]) ){
 			$searchHash = $search_hash[$index];
 		}
@@ -358,7 +358,7 @@ function retrieveIDs_from_hash( $search_hash ){
 
 	while( $index < $upper_limit ){
 
-		print( "index: " . $index . "\n" );
+		print( "Retrieve IDs index: " . $index . "\n" );
 		if( isset($search_hash[0]) ){
 			$searchHash = $search_hash[$index];
 		}
@@ -448,7 +448,7 @@ function refreshCodingSite( $dbname ){
 
 	while( $index < $upper_limit ){
 
-		print( "index: " . $index . "\n" );
+		print( "RefreshCodingSite index: " . $index . "\n" );
 		if( isset($search_hash[0]) ){
 			$searchHash = $search_hash[$index];
 		}
@@ -456,13 +456,15 @@ function refreshCodingSite( $dbname ){
 			$searchHash = $search_hash;
 		}
 
+		$id = 4 + $index;
+
 		$search_array = hashToArray( $searchHash ); // convert stored hash to workable array
 	
 		$search_array = updateSearch( $search_array ); // update date_to to today's date
 
 		$searchHash = arrayToHash( $search_array ); // convert date-changed array back into a hash
 
-		addRawSearchHash( $dbname, $searchHash );	// place that search back in the DB
+		addRawSearchHash( $dbname, $searchHash, $id );	// place that search back in the DB
 
 		$num_before = numTranscripts( $dbname ); // find out how many transcripts were in place prior to refresh
 
@@ -475,6 +477,7 @@ function refreshCodingSite( $dbname ){
 	
 	$index = 1;
 	foreach( $transcript_list as $transcript_id ){
+		print( $off );
 		print( $index."/".sizeof($transcript_list).$Yellow ." fetching transcript " .$off .$Cyan . $transcript_id . $off . "..." );
 		$transcript_json_object = fetchSingleTranscript( $transcript_id ); // get the transcript
 		print( $Purple . "  \t \t \040done" . $off . PHP_EOL );
