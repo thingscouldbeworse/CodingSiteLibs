@@ -421,7 +421,7 @@ function mailOut( $email, $subject, $message ){
 	    print( 'Message could not be sent.' );
 	    print( 'Mailer Error: ' . $mail->ErrorInfo );
 	} else {
-	    print( 'Message has been sent to ' . $email[1] . ' ' . $email[2] );
+	    print( 'Message has been sent to ' . $email[1] . ' ' . $email[2] . PHP_EOL );
 	}
 }
 

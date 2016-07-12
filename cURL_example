@@ -5,47 +5,5 @@ curl 'http://10.163.72.22:7878/api/searches/results?limit=100&offset=0' -H 'Cook
 curl 'http://10.163.72.22:7878/api/transcripts/cbs_wkyt_lexington_ky_20160516_2100' -H 'Cookie: PHPSESSID=jtoergobvciijml6r1ct0n1su7' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: en-US,en;q=0.8' -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Referer: http://10.163.72.22:7878/' -H 'X-Requested-With: XMLHttpRequest' -H 'Connection: keep-alive' --compressed
 curl
 
-
- 'http://10.163.72.22:7878/api/
-searches/results?limit=25&offset=0' 
--H 'Cookie: PHPSESSID=jtoergobvciijml6r1ct0n1su7' 
--H 'Origin: http://10.163.72.22:7878' 
--H 'Accept-Encoding: gzip, deflate' 
--H 'Accept-Language: en-US,en;q=0.8' 
--H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' 
--H 'Accept: */*' 
--H 'Referer: http://10.163.72.22:7878/' 
--H 'X-Requested-With: XMLHttpRequest' 
--H 'Connection: keep-alive' 
---data 
-'
-search[name] = Zika
-search[queries][0][query] = zika
-search[queries][0][label] = zika
-search[queries][0][showResults] = true
-search[date_from] = 2016-04-14T06:00:00.000Z
-search[date_to] = 2016-05-18T01:00:00.000Z
-search[time_of_day_from] = 1700
-search[time_of_day_to] = 1900
-search[created_at] = 2016-01-29T20:04:02.000Z
-search[updated_at] = 2016-05-17T16:23:06.000Z
-search[channels][] = abc_wtvq
-search[channels][] = cbs_wkyt
-search[channels][] = cw_wkytdt2
-search[channels][] = fox_wdky
-search[channels][] = ket_wkle
-search[channels][] = ket2_wkmj
-search[channels][] = nbc_wlex' --compressed
-
-
-curl 'http://10.163.72.22:7878/api/transcripts/cbs_wkyt_lexington_ky_20160516_2100' 
--H 'Cookie: PHPSESSID=jtoergobvciijml6r1ct0n1su7' 
-
-curl 'http://10.163.72.22:7878/api/transcripts/cbs_wkyt_lexington_ky_20160516_2100' -H 'Cookie: PHPSESSID=jtoergobvciijml6r1ct0n1su7' 
-
-
-
-2016-04-14T06:00:00.000Z
-
 curl 'http://10.163.72.22:7878/api/searches/results?limit=100&offset=0' -H 'Cookie: PHPSESSID=jtoergobvciijml6r1ct0n1su7' --data 'search[name]=Zika&search[queries][0][query]=zika&search[queries][0][label]=zika&search[queries][0][showResults]=true&search[date_from]=2016-04-14T06:00:00.000Z&search[date_to]=2016-05-18T01:00:00.000Z&search[time_of_day_from]=1700&search[time_of_day_to]=1900&search[channels][]=abc_wtvq&search[channels][]=nbc_wlex' --compressed
 \[name\][=]([a-z]|[A-Z])*[&]
