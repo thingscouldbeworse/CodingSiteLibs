@@ -29,7 +29,7 @@ while( $row = $result->fetch_assoc() ){
 	
 	$dbname = $row['site name'];
 	print( $dbname . PHP_EOL );
-	refreshNew( $dbname );
+	refreshCodingSite( $dbname );
 }
 
 ?>
