@@ -15,6 +15,16 @@ function readFromFile( $fileName ){
 	return $lines;
 }
 
+// print_r's the variable and whitespace, if $debug == 1
+function debugPrint( $variable, $debug, $name ){
+
+	if( $debug ){
+		print( $name . "=" );
+		print_r( $variable );
+		print( PHP_EOL );
+	}
+}
+
 // returns an array of each email associated with users for the site 
 function retrieveEmails( $dbname ){
 
@@ -429,7 +439,7 @@ function mailOut( $email, $subject, $message ){
 // this function will rerun the search used to created the coding site,
 // find all transcripts associated with the transcript_id's,
 // and add new id's to the site
-function refreshCodingSite( $dbname ){
+function refreshCodingSite( $dbname, $debug ){
 
 	$blue 	= "\033[34m";
 	$green 	= "\033[32m";
@@ -442,21 +452,29 @@ function refreshCodingSite( $dbname ){
 	$off 	= "\033[0m";
 
 	$search_hash = retrieveSearchHash( $dbname ); // get the search associated with the site
+	debugPrint( $search_hash, $debug, $Red."search_hash".$off );
 
 	$upper_limit = sizeof( $search_hash );
 	$index = 0;
+
+	debugPrint( $upper_limit, $debug, "upper_limit" );
 
 	while( $index < $upper_limit ){
 
 		print( "RefreshCodingSite index: " . $index . "\n" );
 		if( $upper_limit > 1 ){
 			$searchHash = $search_hash[$index];
+			debugPrint( $searchHash, $debug, $Red."searchHash".$off );
+			debugPrint( $upper_limit, $debug, $lCyan."upper_limit>1".$off );
 		}
 		else{
 			$searchHash = $search_hash;
+			debugPrint( $search_hash, $debug . $Red ."searchHash".$off );
+			debugPrint( $upper_limit, $debug, $lCyan."upper_limit<=1".$off );
 		}
 
 		$id = 4 + $index;
+		debugPrint( $id, $debug, $Red.'id'.$off );
 
 		$search_array = hashToArray( $searchHash ); // convert stored hash to workable array
 	
