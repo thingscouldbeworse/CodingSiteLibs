@@ -1,11 +1,7 @@
 <?php
 require( 'libs/CoderSitefuncs.php' );
 
-// this file is run through a cron-job at 3 AM each day to refresh each coding site specified in 'commtv_refresh'
-// or at least it's supposed to... logs are appended to /home/comadmin/logs/ by the little shell script that's
-// actually run by the crontab. if the cronjob is not working correctly check there, and if the logfiles aren't
-// showing up as they should check the .sh file because it probably has some nonsense specific to the instance it
-// was running on which is my bad.
+
 
 $config = parse_ini_file( 'config.ini' );
 $servername = $config['servername'];
@@ -33,7 +29,14 @@ while( $row = $result->fetch_assoc() ){
 	
 	$dbname = $row['site name'];
 	print( $dbname . PHP_EOL );
-	refreshNew( $dbname, 0 );
+
+	$search_hash = retrieveSearchHash( $dbname ); // get the search associated with the site
+	print_r( $search_hash );
+
+	$search_array = hashToArray( $search_hash ); // convert stored hash to workable array
+	print_r( $search_array );
+
+	//refreshNew( $dbname, 0 );
 }
 
 ?>
