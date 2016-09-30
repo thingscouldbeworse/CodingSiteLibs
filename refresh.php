@@ -1,5 +1,10 @@
 <?php
-require( 'libs/CoderSitefuncs.php' );
+$location_relative = 'libs/CoderSitefuncs.php';
+$location_absolute = '/var/www/CodingSiteLibs/libs/CoderSiteFuncs.php';
+
+if( (( @include $location_relative ) === false) && (( @include $location_absolute ) === false) ){
+	exit( "neither libs location is valid!" . PHP_EOL );
+}
 
 // this file is run through a cron-job at 3 AM each day to refresh each coding site specified in 'commtv_refresh'
 // or at least it's supposed to... logs are appended to /home/comadmin/logs/ by the little shell script that's
