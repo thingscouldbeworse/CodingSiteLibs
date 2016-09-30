@@ -223,10 +223,10 @@ function insertSingleTranscript( $dbname, $transcript_json_object ) {
 
 // returns the JSON object result of a curl against 7878/api endpoints for search queries
 // use fetchSingleTranscript for cURLing for a specific trasncript_id
-function runCurlSearch( $searchHash, $limit, $offset ){
+function runCurlSearch( $searchHash, $limit, $offset, $debug=0 ){
 
 	$url = "http://10.163.72.22:7878/api/searches/results"; //limit=100&offset=0
-	$PHPSESSID = "jtoergobvciijml6r1ct0n1su7";
+	$PHPSESSID = "cq6f02dmhej4fq3ur4m51mirc7";
 
 	$curl = curl_init();
 
@@ -240,6 +240,9 @@ function runCurlSearch( $searchHash, $limit, $offset ){
 	curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
 	$result = curl_exec($curl);
+	if( $debug )
+		print( 'results?' . PHP_EOL );
+	debugPrint( $result, $debug, 'curl result' );
 	if (curl_errno($curl)) {
 	    echo 'Error:' .curl_error($curl);
 	}
@@ -253,7 +256,7 @@ function runCurlSearch( $searchHash, $limit, $offset ){
 function fetchSingleTranscript( $transcript_id ) {
 
 	$url = "http://10.163.72.22:7878/api/transcripts/";
-	$sess_id = "jtoergobvciijml6r1ct0n1su7";
+	$sess_id = "cq6f02dmhej4fq3ur4m51mirc7";
 	
 	$curl = curl_init();
 
@@ -361,20 +364,22 @@ function retrieveTranscriptIDList( $dbname ){
 }
 
 // retrieve the list of transcript ID's but with a given search hash instead of retrieving a new one
-function retrieveIDs_from_hash( $search_hash ){
+function retrieveIDs_from_hash( $search_hash, $debug=0 ){
 
 	$upper_limit = sizeof( $search_hash );
+	debugPrint( $upper_limit, $debug, 'upper limit' );	
 	$index = 0;
 
 	while( $index < $upper_limit ){
 
-		print( "Retrieve IDs index: " . $index . "\n" );
-		if( isset($search_hash[0]) ){
+		if( $upper_limit > 1 ){
 			$searchHash = $search_hash[$index];
 		}
-		else{
+		elseif( $upper_limit == 1 ){
 			$searchHash = $search_hash;
 		}
+
+		debugPrint( $search_hash, $debug, 'searchHash' );
 
 		$limit = 50;
 		$offset = 0;
@@ -382,6 +387,7 @@ function retrieveIDs_from_hash( $search_hash ){
 		$transcript_ids = [];
 
 		$search_results_json = runCurlSearch( $searchHash, $limit, $offset);
+		debugPrint( $search_results_json, $debug, 'search results' );
 		$search_array = (array)$search_results_json->results->hits;
 
 		while( sizeof($search_array['hits']) < $search_array['total'] ){
