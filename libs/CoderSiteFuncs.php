@@ -225,7 +225,7 @@ function insertSingleTranscript( $dbname, $transcript_json_object ) {
 // use fetchSingleTranscript for cURLing for a specific trasncript_id
 function runCurlSearch( $searchHash, $limit, $offset, $debug=0 ){
 
-	$url = "http://10.163.72.22:7878/api/searches/results"; //limit=100&offset=0
+	$url = "http://10.163.73.9/api/searches/results"; //limit=100&offset=0
 	$PHPSESSID = "cq6f02dmhej4fq3ur4m51mirc7";
 
 	$curl = curl_init();
@@ -255,7 +255,7 @@ function runCurlSearch( $searchHash, $limit, $offset, $debug=0 ){
 // returns all details about an individual transcript as a json object
 function fetchSingleTranscript( $transcript_id ) {
 
-	$url = "http://10.163.72.22:7878/api/transcripts/";
+	$url = "http://10.163.73.9/api/transcripts/";
 	$sess_id = "cq6f02dmhej4fq3ur4m51mirc7";
 	
 	$curl = curl_init();
@@ -643,6 +643,7 @@ function refreshNew( $dbname ){
 	}
 
 	$transcript_list = retrieveIDs_from_hash( $search_hash_changed );
+	print( $transcript_list );
 
 	$index = 1;
 	$transcripts = [];

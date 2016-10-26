@@ -1,6 +1,7 @@
 <?php
-$location_relative = 'libs/CoderSitefuncs.php';
+$location_relative = __DIR__ . '/libs/CoderSiteFuncs.php';
 $location_absolute = '/var/www/CodingSiteLibs/libs/CoderSiteFuncs.php';
+
 
 if( (( @include $location_relative ) === false) && (( @include $location_absolute ) === false) ){
 	exit( "neither libs location is valid!" . PHP_EOL );
