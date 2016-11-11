@@ -1,6 +1,6 @@
 <?php
-$location_relative = __DIR__ . '/libs/CoderSiteFuncs.php';
-$location_absolute = '/var/www/CodingSiteLibs/libs/CoderSiteFuncs.php';
+$location_relative = __DIR__ . '/libs/rewriteSearchFuncs.php';
+$location_absolute = '/var/www/CodingSiteLibs/libs/rewriteSearchFuncs.php';
 
 
 if( (( @include $location_relative ) === false) && (( @include $location_absolute ) === false) ){
@@ -39,7 +39,7 @@ while( $row = $result->fetch_assoc() ){
 	
 	$dbname = $row['site name'];
 	print( $dbname . PHP_EOL );
-	refreshNew( $dbname, 0 );
+	refreshNew2( $dbname, 0 );
 }
 
 ?>

@@ -3,7 +3,11 @@ curl 'http://10.163.72.22:7878/api/searches/results?limit=100&offset=0' -H 'Cook
 
 
 curl 'http://10.163.72.22:7878/api/transcripts/cbs_wkyt_lexington_ky_20160516_2100' -H 'Cookie: PHPSESSID=jtoergobvciijml6r1ct0n1su7' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: en-US,en;q=0.8' -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Referer: http://10.163.72.22:7878/' -H 'X-Requested-With: XMLHttpRequest' -H 'Connection: keep-alive' --compressed
-curl
+
+
+curl 'http://10.163.73.9/api/transcripts/cbs_wkyt_lexington_ky_20161108_2200' -H 'Host: 10.163.73.9' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:51.0) Gecko/20100101 Firefox/51.0' -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'X-Requested-With: XMLHttpRequest' -H 'Referer: http://10.163.73.9/' -H 'Cookie: PHPSESSID=0hia25cbhfb12cjvtjcpk0bj85' -H 'Connection: keep-alive'
+
+
 
 curl 'http://10.163.72.22:7878/api/searches/results?limit=100&offset=0' -H 'Cookie: PHPSESSID=jtoergobvciijml6r1ct0n1su7' --data 'search[name]=Zika&search[queries][0][query]=zika&search[queries][0][label]=zika&search[queries][0][showResults]=true&search[date_from]=2016-04-14T06:00:00.000Z&search[date_to]=2016-05-18T01:00:00.000Z&search[time_of_day_from]=1700&search[time_of_day_to]=1900&search[channels][]=abc_wtvq&search[channels][]=nbc_wlex' --compressed
 \[name\][=]([a-z]|[A-Z])*[&]

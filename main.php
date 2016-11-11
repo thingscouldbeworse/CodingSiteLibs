@@ -1,9 +1,20 @@
 <?php
-require( 'libs/CoderSitefuncs.php' );
 
-// this file is run through a cron-job at 3 AM each day to refresh each coding site specified in 'commtv_refresh'
+require( 'libs/rewriteSearchFuncs.php' );
+/*
+$hashes = retrieveSearchHashes( 'commtv_zika' );
 
-refreshNew( 'commtv_testing', 1 );
+$total_hits = retrieveTranscriptList( $hashes );
+
+$total_hits = consolidateIDList( $total_hits );
+print_r( $total_hits );
+
+$transcripts = retrieveAllTranscripts( $total_hits );
+
+massAdd('commtv_zika', $transcripts ); 
+*/
+
+refreshNew2( 'commtv_zika' );
 
 
 ?>

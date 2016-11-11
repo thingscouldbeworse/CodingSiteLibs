@@ -1,6 +1,7 @@
 <?php
 
 require( 'SearchObjectFuncs.php' );
+//require( 'rewriteSearchFuncs.php' );
 require( __DIR__ . '/../vendor/autoload.php' );
 
 // useful API functions are closer to the end of this file, boilerplate at the beginning
@@ -226,7 +227,7 @@ function insertSingleTranscript( $dbname, $transcript_json_object ) {
 function runCurlSearch( $searchHash, $limit, $offset, $debug=0 ){
 
 	$url = "http://10.163.73.9/api/searches/results"; //limit=100&offset=0
-	$PHPSESSID = "cq6f02dmhej4fq3ur4m51mirc7";
+	$PHPSESSID = "ccdud0l8fvumrmtq9914pdls77";
 
 	$curl = curl_init();
 
@@ -405,6 +406,21 @@ function retrieveIDs_from_hash( $search_hash, $debug=0 ){
 	}
 
 	return $transcript_ids;
+}
+
+function retrieveIDs_from_single_hash( $search_hash ){
+
+
+	$limit = 50;
+	$offset = 0;
+
+
+	$search_results_json = runCurlSearch( $search_hash, $limit, $offset);
+	$result = $search_results_json;
+
+	print( $search_results_json );
+
+	return $result;
 }
 
 // email a specified email address with message
